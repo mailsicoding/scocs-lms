@@ -33,6 +33,7 @@ Route::group(['prefix' => 'admin'],function(){
 
 Route::get('login',[LoginController::class,'showLoginForm'])->name('admin.login.form');
 Route::post('login',[LoginController::class,'login'])->name('admin.login');
+Route::get('logout',[LoginController::class,'logout'])->name('admin.logout');
 Route::get('password/forgot',[PasswordController::class,'showLinkRequestForm'])->name('admin.password.forgot');
 Route::post('password/email',[PasswordController::class,'sendResetLinkEmail'])->name('admin.password.link');
 Route::get('password/reset/{token}',[PasswordController::class,'showResetForm'])->name('admin.password.email');
@@ -40,7 +41,7 @@ Route::post('password/reset',[PasswordController::class,'reset'])->name('admin.p
 
 });
 
-Route::group(['prefix' => 'admin'],function(){
+Route::group(['prefix' => 'admin', 'middleware' => ['admin']],function(){
 
     Route::get('/',[HomeController::class,'admin'])->name('admin.dashboard');
     
