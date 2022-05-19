@@ -1,0 +1,172 @@
+/*
+    DEMO STYLE
+*/
+
+@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #fafafa;
+}
+
+p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1em;
+    font-weight: 300;
+    line-height: 1.7em;
+    color: #999;
+}
+
+a,
+a:hover,
+a:focus {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.navbar-btn {
+    box-shadow: none;
+    outline: none !important;
+    border: none;
+}
+
+.line {
+    width: 100%;
+    height: 1px;
+    border-bottom: 1px dashed #ddd;
+    margin: 40px 0;
+}
+
+/* ---------------------------------------------------
+    sidebar-o STYLE
+----------------------------------------------------- */
+
+.wrapper {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+}
+
+#sidebar-o {
+    min-width: 250px;
+    max-width: 250px;
+    background:  #121212;
+    color: #fff;
+    transition: all 0.3s;
+}
+
+#sidebar-o.active {
+    margin-left: -250px;
+}
+
+#sidebar-o .sidebar-o-header {
+    padding: 10px 54px;
+    height: 150px;
+    background:  #121212;
+}
+#sidebar-o .sidebar-o-header img{
+    width: 100%;
+    height: 100%;
+}
+
+#sidebar-o ul.components {
+    list-style: none;
+    margin-left: 0px;
+    padding: 20px 0;
+}
+#sidebar-o ul {
+    list-style: none;
+    margin-left: 0px;
+}
+#sidebar-o ul p {
+    color: #fff;
+    padding: 10px;
+}
+
+#sidebar-o ul li a {
+    padding: 10px;
+    font-size: 1.1em;
+    display: block;
+}
+
+#sidebar-o ul li a:hover {
+    background: #000;
+}
+
+#sidebar-o ul li.active>a,
+a[aria-expanded="true"] {
+    color: #fff;
+    background: #000;
+}
+
+a[data-toggle="collapse"] {
+    position: relative;
+}
+
+.dropdown-toggle::after {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+}
+
+#sidebar-o ul ul a {
+    font-size: 0.9em !important;
+    padding-left: 30px !important;
+    background: #000;
+}
+
+#sidebar-o ul.CTAs {
+    padding: 20px;
+}
+
+#sidebar-o ul.CTAs a {
+    text-align: center;
+    font-size: 0.9em !important;
+    display: block;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+.btn:focus{outline: none}
+
+
+/* ---------------------------------------------------
+    CONTENT STYLE
+----------------------------------------------------- */
+
+#content-o {
+    width: 100%;
+    min-height: 100vh;
+    transition: all 0.3s;
+}
+.main-content {
+    padding-right: 20px; 
+    padding-left: 20px;
+}
+body {
+    padding-right: 0px!important; 
+    padding-left: 0px!important;
+}
+.table{
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+}
+
+/* ---------------------------------------------------
+    MEDIAQUERIES
+----------------------------------------------------- */
+
+@media (max-width: 768px) {
+    #sidebar-o {
+        margin-left: -250px;
+    }
+    #sidebar-o.active {
+        margin-left: 0;
+    }
+    #sidebar-oCollapse span {
+        display: none;
+    }
+}
