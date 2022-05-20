@@ -4,7 +4,7 @@
 <div class="panel panel-default text-center paper-shadow" data-z="0.5">
     <h1 class="text-display-1 text-center margin-bottom-none">Admin</h1>
     <img src="{{ asset('frontend_assets/auth_assets/images/logo.png') }}" class="img-circle width-80">
-    <form action="" method="post">
+    <form action="{{ route('admin.login') }}" method="post">
         @csrf
         <div class="panel-body">
             <div class="form-group">

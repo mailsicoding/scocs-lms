@@ -23,14 +23,15 @@
                     </div>
                     <div class="block-content collapse in">
                         <div class="span12">
-                            <form method="post" action="{{ route('class.store') }}">
+                            <form method="post" action="{{ route('class.update',$class->id) }}">
                                 @csrf
+                                @method('put')
                                 <div class="control-group">
                                     <div class="controls">
                                         <label for="">Class Name</label>
                                         <input class="input focused @error('class_name') is-invalid @enderror"
                                             id="focusedInput" name="class_name" type="text" placeholder="Class Name"
-                                            value="">
+                                            value="{{ $class->class_name }}">
                                         @error('class_name')
                                         <div class="invalid-feedback">
                                             {{$message}}
@@ -44,7 +45,7 @@
                                         <label for="">No Of Students</label>
                                         <input class="input focused @error('no_of_students') is-invalid @enderror"
                                             id="focusedInput" name="no_of_students" type="number"
-                                            placeholder="No Of Students" value="">
+                                            placeholder="No Of Students" value="{{ $class->no_of_students }}">
                                         @error('no_of_students')
                                         <div class="invalid-feedback">
                                             {{$message}}
@@ -96,14 +97,11 @@
                                         <td width="@php echo 100/4; @endphp%">{{ $class->class_name }}</td>
                                         <td width="@php echo 100/4; @endphp%">{{ $class->no_of_students }}</td>
 
-                                        <td width="@php echo 100/4; @endphp%"><a
-                                                href="{{ route('class.edit',$class->id) }}" class="btn btn-success"><i
-                                                    class="icon-pencil icon-large"></i></a>
-                                            @php $cls = route('class.destroy',$class->id); @endphp
-                                            <a data-toggle="modal" href="#class_delete" style="margin-top:10px"
-                                                id="delete" class="btn btn-danger"
-                                                onclick="delete_record('{{ $cls }}','Delete Class','class')"><i
-                                                    class="icon-trash icon-large"></i></a>
+                                        <td width="@php echo 100/4; @endphp%"><a href="{{ route('class.edit',$class->id) }}"
+                                                class="btn btn-success"><i class="icon-pencil icon-large"></i></a>
+                                                @php $cls = route('class.destroy',$class->id); @endphp
+                                            <a data-toggle="modal" href="#class_delete" style="margin-top:10px" id="delete"
+                                                class="btn btn-danger" onclick="delete_record('{{ $cls }}','Delete Class','class')"><i class="icon-trash icon-large"></i></a>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -118,8 +116,9 @@
 
         </div>
     </div>
-
-
 </div>
+
+@endsection
+@section('scripts')
 
 @endsection

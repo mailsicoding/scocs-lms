@@ -182,6 +182,7 @@ return [
         */
 
         Mckenziearts\Notify\LaravelNotifyServiceProvider::class,
+        Yoeunes\Toastr\ToastrServiceProvider::class,
 
     ],
 

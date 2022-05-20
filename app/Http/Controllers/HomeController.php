@@ -25,4 +25,14 @@ class HomeController extends Controller
     {   
         return view('admins.classes.index');
     }
+
+    public function teacher()
+    {   
+        return "teacher";
+    }
+
+    public function student()
+    {   
+        return "student";
+    }
 }

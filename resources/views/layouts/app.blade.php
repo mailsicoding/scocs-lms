@@ -14,7 +14,7 @@
     <link href="{{ asset('frontend_assets/auth_assets/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('frontend_assets/auth_assets/css/vendor/all.css') }}" rel="stylesheet">
     <link href="{{ asset('frontend_assets/auth_assets/css/app/app.css') }}" rel="stylesheet">
-    @notifyCss
+    @toastr_css
 </head>
 
 <body class="login">
@@ -66,9 +66,10 @@
     <script src="{{ asset('frontend_assets/auth_assets/js/vendor/all.js') }}"></script>
 
     <script src="{{ asset('frontend_assets/auth_assets/js/app/app.js') }}"></script>
-    @include('notify::components.notify')
-    <x:notify-messages />
-    @notifyJs
+    
+    @jquery
+    @toastr_js
+    @toastr_render
 </body>
 
 </html>
