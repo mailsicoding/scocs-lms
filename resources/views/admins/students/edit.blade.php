@@ -1,6 +1,6 @@
 @extends('admins.layout.app')
 
-@section('title','Classes')
+@section('title','Students')
 
 @section('content')
 
@@ -42,11 +42,11 @@
 
                                 <div class="control-group">
                                     <div class="controls">
-                                        <label for="">Session Year</label>
-                                        <input class="input focused @error('session_year') is-invalid @enderror"
-                                            id="focusedInput" name="session_year" type="number"
-                                            placeholder="No Of Students" value="{{ $class->session_year }}">
-                                        @error('session_year')
+                                        <label for="">No Of Students</label>
+                                        <input class="input focused @error('no_of_students') is-invalid @enderror"
+                                            id="focusedInput" name="no_of_students" type="number"
+                                            placeholder="No Of Students" value="{{ $class->no_of_students }}">
+                                        @error('no_of_students')
                                         <div class="invalid-feedback">
                                             {{$message}}
                                         </div>
@@ -84,7 +84,7 @@
                                     <tr>
                                         <th>Sr.No</th>
                                         <th>Class Name</th>
-                                        <th>Session Year</th>
+                                        <th>No Of Students</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -95,7 +95,7 @@
                                             {{ $loop->iteration }}
                                         </td>
                                         <td width="@php echo 100/4; @endphp%">{{ $class->class_name }}</td>
-                                        <td width="@php echo 100/4; @endphp%">{{ $class->session_year }}</td>
+                                        <td width="@php echo 100/4; @endphp%">{{ $class->no_of_students }}</td>
 
                                         <td width="@php echo 100/4; @endphp%"><a href="{{ route('class.edit',$class->id) }}"
                                                 class="btn btn-success"><i class="icon-pencil icon-large"></i></a>

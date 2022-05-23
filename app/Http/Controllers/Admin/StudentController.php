@@ -7,7 +7,7 @@ use App\Models\Admin\Classes;
 use App\Models\Student;
 use Illuminate\Http\Request;
 
-class ClassController extends Controller
+class StudentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +16,8 @@ class ClassController extends Controller
      */
     public function index()
     {
-        $classes = Classes::orderBy('session_year','asc')->get();
-        return view('admins.classes.index',compact('classes'));
+        $students = Student::all();
+        return view('admins.students.index',compact('students'));
     }
 
     /**
@@ -39,12 +39,20 @@ class ClassController extends Controller
     public function store(Request $request)
     {
         // dd($request->all());
+        $input = $request->all();
         $request->validate([
-            'class_name' => 'required|unique:classes|string',
-            'session_year' => 'required|numeric|unique:classes',
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'email' => 'required|unique:students|email',
+            'phone_number' => 'required|unique:students|numeric',
+            'cnic_number' => 'required|unique:students|numeric',
+            'date_of_birth' => 'required|date',
         ]);
-        Classes::create($request->all());
-        toastr()->success('The Class '.$request->class_name.' created successfully.');
+        $students = Student::where('class_id',$input['class_id'])->get();
+        // $input['roll_no'] = ;
+        $student = Student::create($request->all());
+        $name = $student->first_name.' '.$student->last_name;
+        toastr()->success('The Student '.$name.' created successfully.');
         return redirect()->back();
     }
 
@@ -56,9 +64,7 @@ class ClassController extends Controller
      */
     public function show($id)
     {
-        $students = Student::where('class_id',$id)->orderBy('username')->get();
-        $classes = Classes::orderBy('session_year','asc')->get();
-        return view('admins.students.index',compact('students','classes'));
+        //
     }
 
     /**
@@ -69,9 +75,7 @@ class ClassController extends Controller
      */
     public function edit($id)
     {
-        $classes = Classes::orderBy('session_year','asc')->get();
-        $class = Classes::find($id);
-        return view('admins.classes.edit',compact('classes','class'));
+        //
     }
 
     /**
@@ -83,14 +87,7 @@ class ClassController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // dd($request->all());
-        $request->validate([
-            'class_name' => 'required|string|unique:classes,class_name,'.$id,
-            'session_year' => 'required||numeric|unique:classes,session_year,'.$id,
-        ]);
-        Classes::find($id)->update($request->all());
-        toastr()->success('The Class '.$request->class_name.' updated successfully.');
-        return redirect()->route('class.index');
+        //
     }
 
     /**
@@ -101,10 +98,6 @@ class ClassController extends Controller
      */
     public function destroy($id)
     {
-        $class = Classes::find($id);
-        $className = $class->class_name;
-        $class->delete();
-        toastr()->success('The Class '.$className.' deleted successfully.');
-        return redirect()->route('class.index');
+        //
     }
 }

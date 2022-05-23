@@ -23,7 +23,7 @@ class HomeController extends Controller
      */
     public function admin()
     {   
-        return view('admins.classes.index');
+        return view('admins.dashboard.index');
     }
 
     public function teacher()

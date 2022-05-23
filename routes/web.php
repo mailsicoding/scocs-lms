@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\ClassController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\PasswordController;
+use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Student\LoginController as StudentLoginController;
 use App\Http\Controllers\Student\PasswordController as StudentPasswordController;
@@ -48,6 +49,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']],function(){
 
     Route::get('/',[HomeController::class,'admin'])->name('admin.dashboard');
     Route::resource('class',ClassController::class);
+    Route::resource('student',StudentController::class);
     Route::get('logout',[LoginController::class,'logout'])->name('admin.logout');
     
 });
