@@ -2,9 +2,9 @@
 @section('title','Login')
 @section('content')
 <div class="panel panel-default text-center paper-shadow" data-z="0.5">
-    <h1 class="text-display-1 text-center margin-bottom-none">Admin</h1>
+    <h1 class="text-display-1 text-center margin-bottom-none">Teacher</h1>
     <img src="{{ asset('frontend_assets/auth_assets/images/logo.png') }}" class="img-circle width-80">
-    <form action="" method="post">
+    <form action="{{ route('teacher.login') }}" method="post">
         @csrf
         <div class="panel-body">
             <div class="form-group">
@@ -29,9 +29,8 @@
             </div>
 
             <button class="btn btn-primary" type="submit">Login <i class="fa fa-fw fa-unlock-alt"></i></button>
-            <a href="#" class="forgot-password">Forgot password?</a>
+            <a href="{{ route('teacher.password.forgot') }}" class="forgot-password">Forgot password?</a>
         </div>
     </form>
-    <div style="height: 20px;"></div>
 </div>
 @endsection

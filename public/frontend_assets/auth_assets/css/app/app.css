@@ -25,15 +25,20 @@ body.login .lock-container {
     position: absolute;
     top: 0;
     right: 0;
+    align-items: center;
+    display: flex;
   }
 }
 body.login .lock-container .panel {
-  max-width: 300px !important;
+  width: 300px !important;
   background: #fff;
   position: relative;
+  padding: 20px 10px;
 }
 body.login .lock-container .panel img {
   margin: 20px 0 10px;
+  margin-left: auto;
+    margin-right: auto;
 }
 body.login .lock-container .panel .forgot-password {
   margin: 10px 0 0;
@@ -48559,4 +48564,9 @@ fieldset[disabled] .owl-preview .owl-controls .owl-nav > div {
 }
 .media-clearfix-xs-min > .media-body [class*="media"] .media-object {
   width: 50px !important;
+}
+@media (max-width : 480px){
+  .lock-container {
+    bottom: 0;height: 550px;left: 0;position: absolute;top: 0;right: 0;
+  }
 }

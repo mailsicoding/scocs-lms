@@ -1,10 +1,17 @@
 <?php
 
+use App\Http\Controllers\Admin\ClassController;
+use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\PasswordController;
+use App\Http\Controllers\Admin\StudentController;
+use App\Http\Controllers\Admin\TeacherController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Student\LoginController as StudentLoginController;
+use App\Http\Controllers\Student\PasswordController as StudentPasswordController;
 use App\Http\Controllers\Teacher\LoginController as TeacherLoginController;
+use App\Http\Controllers\Teacher\PasswordController as TeacherPasswordController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,8 +26,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
+   return view('welcome');
+})->name('welcome')->middleware(['login_check']);
 
 /*
 |--------------------------------------------------------------------------
@@ -29,20 +36,25 @@ Route::get('/', function () {
  */
 
 
-Route::group(['prefix' => 'admin'],function(){
+Route::group(['prefix' => 'admin','middleware' => ['login_check']],function(){
 
-Route::get('login',[LoginController::class,'showLoginForm'])->name('admin.login.form');
-Route::post('login',[LoginController::class,'login'])->name('admin.login');
-Route::get('password/forgot',[PasswordController::class,'showLinkRequestForm'])->name('admin.password.forgot');
-Route::post('password/email',[PasswordController::class,'sendResetLinkEmail'])->name('admin.password.link');
-Route::get('password/reset/{token}',[PasswordController::class,'showResetForm'])->name('admin.password.email');
-Route::post('password/reset',[PasswordController::class,'reset'])->name('admin.password.reset');
+    Route::get('login',[LoginController::class,'showLoginForm'])->name('admin.login.form');
+    Route::post('login',[LoginController::class,'login'])->name('admin.login');
+    Route::get('password/forgot',[PasswordController::class,'showLinkRequestForm'])->name('admin.password.forgot');
+    Route::post('password/email',[PasswordController::class,'sendResetLinkEmail'])->name('admin.password.link');
+    Route::get('password/reset/{token}',[PasswordController::class,'showResetForm'])->name('admin.password.email');
+    Route::post('password/reset',[PasswordController::class,'reset'])->name('admin.password.reset');
 
 });
 
-Route::group(['prefix' => 'admin'],function(){
+Route::group(['prefix' => 'admin', 'middleware' => ['admin']],function(){
 
     Route::get('/',[HomeController::class,'admin'])->name('admin.dashboard');
+    Route::resource('classes',ClassController::class);
+    Route::resource('students',StudentController::class);
+    Route::resource('courses',CourseController::class);
+    Route::resource('teachers',TeacherController::class);
+    Route::post('logout',[LoginController::class,'logout'])->name('admin.logout');
     
 });
 
@@ -52,8 +64,23 @@ Route::group(['prefix' => 'admin'],function(){
 |--------------------------------------------------------------------------
  */
 
-Route::get('teacher/login',[TeacherLoginController::class,'showLoginForm'])->name('teacher.login.form');
-Route::post('teacher/login',[LoginController::class,'login'])->name('teacher.login');
+Route::group(['prefix' => 'teacher','middleware' => ['login_check']],function(){
+
+    Route::get('login',[TeacherLoginController::class,'showLoginForm'])->name('teacher.login.form');
+    Route::post('login',[TeacherLoginController::class,'login'])->name('teacher.login');
+    Route::get('password/forgot',[TeacherPasswordController::class,'showLinkRequestForm'])->name('teacher.password.forgot');
+    Route::post('password/email',[TeacherPasswordController::class,'sendResetLinkEmail'])->name('teacher.password.link');
+    Route::get('password/reset/{token}',[TeacherPasswordController::class,'showResetForm'])->name('teacher.password.email');
+    Route::post('password/reset',[TeacherPasswordController::class,'reset'])->name('teacher.password.reset');
+
+});
+
+Route::group(['prefix' => 'teacher', 'middleware' => ['teacher']],function(){
+
+    Route::get('/',[HomeController::class,'teacher'])->name('teacher.dashboard');
+    Route::post('logout',[TeacherLoginController::class,'logout'])->name('teacher.logout');
+    
+});
 
 /*
 |--------------------------------------------------------------------------
@@ -61,5 +88,20 @@ Route::post('teacher/login',[LoginController::class,'login'])->name('teacher.log
 |--------------------------------------------------------------------------
  */
 
-Route::get('student/login',[StudentLoginController::class,'showLoginForm'])->name('student.login.form');
-Route::post('student/login',[LoginController::class,'login'])->name('student.login');
+Route::group(['prefix' => 'student','middleware' => ['login_check']],function(){
+
+    Route::get('login',[StudentLoginController::class,'showLoginForm'])->name('student.login.form');
+    Route::post('login',[StudentLoginController::class,'login'])->name('student.login');
+    Route::get('password/forgot',[StudentPasswordController::class,'showLinkRequestForm'])->name('student.password.forgot');
+    Route::post('password/email',[StudentPasswordController::class,'sendResetLinkEmail'])->name('student.password.link');
+    Route::get('password/reset/{token}',[StudentPasswordController::class,'showResetForm'])->name('student.password.email');
+    Route::post('password/reset',[StudentPasswordController::class,'reset'])->name('student.password.reset');
+
+});
+
+Route::group(['prefix' => 'student', 'middleware' => ['student']],function(){
+
+    Route::get('/',[HomeController::class,'student'])->name('student.dashboard');
+    Route::post('logout',[StudentLoginController::class,'logout'])->name('student.logout');
+    
+});

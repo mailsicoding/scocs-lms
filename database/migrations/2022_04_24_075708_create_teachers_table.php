@@ -17,12 +17,11 @@ return new class extends Migration
             $table->id();
             $table->string('first_name');
             $table->string('last_name');
-            $table->string('image');
-            $table->string('phone')->unique();
+            $table->string('image')->default('frontend_assets/uploads/NO-IMAGE-AVAILABLE.jpg');
+            $table->string('phone_number')->unique();
             $table->string('username');
             $table->string('email')->unique();
             $table->string('password');
-            $table->softDeletes();
             $table->timestamps();
         });
     }
