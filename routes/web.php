@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\Admin\ClassController;
+use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\PasswordController;
 use App\Http\Controllers\Admin\StudentController;
+use App\Http\Controllers\Admin\TeacherController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Student\LoginController as StudentLoginController;
 use App\Http\Controllers\Student\PasswordController as StudentPasswordController;
@@ -48,9 +50,11 @@ Route::group(['prefix' => 'admin','middleware' => ['login_check']],function(){
 Route::group(['prefix' => 'admin', 'middleware' => ['admin']],function(){
 
     Route::get('/',[HomeController::class,'admin'])->name('admin.dashboard');
-    Route::resource('class',ClassController::class);
-    Route::resource('student',StudentController::class);
-    Route::get('logout',[LoginController::class,'logout'])->name('admin.logout');
+    Route::resource('classes',ClassController::class);
+    Route::resource('students',StudentController::class);
+    Route::resource('courses',CourseController::class);
+    Route::resource('teachers',TeacherController::class);
+    Route::post('logout',[LoginController::class,'logout'])->name('admin.logout');
     
 });
 
@@ -74,7 +78,7 @@ Route::group(['prefix' => 'teacher','middleware' => ['login_check']],function(){
 Route::group(['prefix' => 'teacher', 'middleware' => ['teacher']],function(){
 
     Route::get('/',[HomeController::class,'teacher'])->name('teacher.dashboard');
-    Route::get('logout',[TeacherLoginController::class,'logout'])->name('teacher.logout');
+    Route::post('logout',[TeacherLoginController::class,'logout'])->name('teacher.logout');
     
 });
 
@@ -98,6 +102,6 @@ Route::group(['prefix' => 'student','middleware' => ['login_check']],function(){
 Route::group(['prefix' => 'student', 'middleware' => ['student']],function(){
 
     Route::get('/',[HomeController::class,'student'])->name('student.dashboard');
-    Route::get('logout',[StudentPasswordController::class,'logout'])->name('student.logout');
+    Route::post('logout',[StudentLoginController::class,'logout'])->name('student.logout');
     
 });

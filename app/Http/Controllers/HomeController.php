@@ -28,11 +28,11 @@ class HomeController extends Controller
 
     public function teacher()
     {   
-        return "teacher";
+        return view('teachers.dashboard.index');
     }
 
     public function student()
     {   
-        return "student";
+        return view('students.dashboard.index');
     }
 }

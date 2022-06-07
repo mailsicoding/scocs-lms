@@ -23,16 +23,16 @@ class PasswordController extends Controller
     {
         $request->validate(['username' => 'required']);
         $username = $request->username;
-        $student = Teacher::where('username' , $username)->first();
-        if($student)
+        $teacher = Teacher::where('username' , $username)->first();
+        if($teacher)
         {
-            DB::table('password_resets')->where('email',$student->email)->delete();
-            DB::table('password_resets')->insert(['email' => $student->email,'token' => Str::random(30),'created_at' => Carbon::now()]);
-            $pr = DB::table('password_resets')->where('email',$student->email)->first();
-            $url = url('/student/password/reset/'.$pr->token.'?email='.$pr->email);
-            Mail::to($pr->email)->send(new ResetPasswordMail($url));
-            $email = $pr->email;
-            toastr()->success('The Password Reset Email sent to '.$student->email.' Successfully.');
+            $email = $teacher->email;
+            $token = Str::random(30);
+            DB::table('password_resets')->where('email',$email)->delete();
+            $url = url('/teacher/password/reset/'.$token.'?email='.$email);
+            DB::table('password_resets')->insert(['email' => $email,'token' => $token,'url' => $url,'created_at' => Carbon::now()]);
+            Mail::to($email)->send(new ResetPasswordMail($url));
+            toastr()->success('The Password Reset Email sent to '.$email.' Successfully.');
             return view('teachers.auth.passwords.resend',compact('username','email'));
         }
         toastr()->error('The Username Does Not Match Our Record. Try Again !!');
@@ -41,9 +41,11 @@ class PasswordController extends Controller
     
     public function showResetForm(Request $request,$token)
     {
+        $url = $request->url();
         $pr = DB::table('password_resets')
             ->where('email',$request->email)
             ->where('token',$token)
+            ->where('url',$url)
             ->first();
         if($pr)
         {

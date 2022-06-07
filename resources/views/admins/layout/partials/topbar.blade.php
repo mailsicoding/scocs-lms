@@ -25,7 +25,8 @@
                             </li>
                             <li class="divider"></li>
                             <li>
-                                <a tabindex="-1" href="../auth/logout.php"><i class="icon-signout"></i>&nbsp;Logout</a>
+                                <a tabindex="-1" href="#" onclick="document.querySelector('#logout-form').submit()"><i class="icon-signout"></i>&nbsp;Logout</a>
+                                <form action="{{ route('admin.logout') }}" id="logout-form" method="post">@csrf</form>
                             </li>
                         </ul>
                     </li>

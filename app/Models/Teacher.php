@@ -10,15 +10,13 @@ use Illuminate\Notifications\Notifiable;
 
 class Teacher extends Authenticatable
 {
-    use HasFactory,SoftDeletes,Notifiable;
-
-    protected $dates = ['deleted_at'];
+    use HasFactory,Notifiable;
 
     protected $fillable = [
         'first_name',
         'last_name',
         'image',
-        'phone',
+        'phone_number',
         'username',
         'email',
         'password',

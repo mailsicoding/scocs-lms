@@ -26,13 +26,13 @@ class PasswordController extends Controller
         $admin = Admin::where('username' , $username)->first();
         if($admin)
         {
-            DB::table('password_resets')->where('email',$admin->email)->delete();
-            DB::table('password_resets')->insert(['email' => $admin->email,'token' => Str::random(30),'created_at' => Carbon::now()]);
-            $pr = DB::table('password_resets')->where('email',$admin->email)->first();
-            $url = url('/admin/password/reset/'.$pr->token.'?email='.$pr->email);
-            Mail::to($pr->email)->send(new ResetPasswordMail($url));
-            $email = $pr->email;
-            toastr()->success('The Password Reset Email sent to '.$admin->email.' Successfully.');
+            $email = $admin->email;
+            $token = Str::random(30);
+            DB::table('password_resets')->where('email',$email)->delete();
+            $url = url('/admin/password/reset/'.$token.'?email='.$email);
+            DB::table('password_resets')->insert(['email' => $email,'token' => $token,'url' => $url,'created_at' => Carbon::now()]);
+            Mail::to($email)->send(new ResetPasswordMail($url));
+            toastr()->success('The Password Reset Email sent to '.$email.' Successfully.');
             return view('admins.auth.passwords.resend',compact('username','email'));
         }
         toastr()->error('The Username Does Not Match Our Record. Try Again !!');
@@ -41,9 +41,11 @@ class PasswordController extends Controller
     
     public function showResetForm(Request $request,$token)
     {
+        $url = $request->url();
         $pr = DB::table('password_resets')
             ->where('email',$request->email)
             ->where('token',$token)
+            ->where('url',$url)
             ->first();
         if($pr)
         {

@@ -9,7 +9,7 @@
             <div class="form-group">
                 <b>Your Password Updated Successfully.</b></br></br>
             </div>
-            <a class="btn btn-primary" href="{{route('student.login.form')}}" type="submit">Login <i class="fa fa-fw fa-unlock-alt"></i></a>
+            <a class="btn btn-primary" href="{{route('students.login.form')}}" type="submit">Login <i class="fa fa-fw fa-unlock-alt"></i></a>
         </div>
     
 </div>

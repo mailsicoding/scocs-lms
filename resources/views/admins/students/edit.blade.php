@@ -8,7 +8,7 @@
 
     <div class="row-fluid">
         <div class="span6">
-            <h2>Classes</h2>
+            <h2>Students Of {{ $class->class_name }} ( {{ $class->session_year }} )</h2>
         </div>
     </div>
     <div style="height:20px;"></div>
@@ -19,20 +19,42 @@
                 <!-- block -->
                 <div class="block">
                     <div class="navbar navbar-inner block-header">
-                        <div class="muted pull-left">Add Class</div>
+                        <div class="muted pull-left">Edit Student</div>
                     </div>
                     <div class="block-content collapse in">
                         <div class="span12">
-                            <form method="post" action="{{ route('class.update',$class->id) }}">
+                            <form method="post" action="{{ route('students.update',$student->id) }}">
                                 @csrf
                                 @method('put')
                                 <div class="control-group">
                                     <div class="controls">
                                         <label for="">Class Name</label>
-                                        <input class="input focused @error('class_name') is-invalid @enderror"
-                                            id="focusedInput" name="class_name" type="text" placeholder="Class Name"
-                                            value="{{ $class->class_name }}">
-                                        @error('class_name')
+                                        <input class="input focused @error('first_name') is-invalid @enderror"
+                                            id="focusedInput" name="" disabled type="text" placeholder="First Name"
+                                            value="{{ $class->class_name }} ( {{ $class->session_year }} )">
+                                            <input type="hidden" name="class_name" value="{{ $class->id }}">
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <label for="">First Name</label>
+                                        <input class="input focused @error('first_name') is-invalid @enderror"
+                                            id="focusedInput" value="{{ $student->first_name }}" name="first_name" type="text" placeholder="First Name"
+                                            >
+                                        @error('first_name')
+                                        <div class="invalid-feedback">
+                                            {{$message}}
+                                        </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <label for="">Last Name</label>
+                                        <input class="input focused @error('last_name') is-invalid @enderror"
+                                            id="focusedInput" name="last_name" type="text" placeholder="Last Name"
+                                            value="{{ $student->last_name }}">
+                                        @error('last_name')
                                         <div class="invalid-feedback">
                                             {{$message}}
                                         </div>
@@ -42,11 +64,52 @@
 
                                 <div class="control-group">
                                     <div class="controls">
-                                        <label for="">No Of Students</label>
-                                        <input class="input focused @error('no_of_students') is-invalid @enderror"
-                                            id="focusedInput" name="no_of_students" type="number"
-                                            placeholder="No Of Students" value="{{ $class->no_of_students }}">
-                                        @error('no_of_students')
+                                        <label for="">Email</label>
+                                        <input class="input focused @error('email') is-invalid @enderror"
+                                            id="focusedInput" name="email" type="email" placeholder="Email"  value="{{ $student->email }}">
+                                        @error('email')
+                                        <div class="invalid-feedback">
+                                            {{$message}}
+                                        </div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <label for="">Phone Number</label>
+                                        <input class="input focused @error('phone_number') is-invalid @enderror"
+                                            id="focusedInput" name="phone_number" type="number"
+                                            placeholder="Phone Number" value="{{ $student->phone_number }}">
+                                        @error('phone_number')
+                                        <div class="invalid-feedback">
+                                            {{$message}}
+                                        </div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <label for="">CNIC Number</label>
+                                        <input class="input focused @error('cnic_number') is-invalid @enderror"
+                                            id="focusedInput" name="cnic_number" type="number" placeholder="CNIC Number"
+                                            value="{{ $student->cnic_number }}">
+                                        @error('cnic_number')
+                                        <div class="invalid-feedback">
+                                            {{$message}}
+                                        </div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <label for="">Date Of Birth</label>
+                                        <input class="input focused @error('date_of_birth') is-invalid @enderror"
+                                            id="focusedInput" name="date_of_birth" type="date"
+                                            placeholder="xxxxxxxxxxxxx" value="{{ $student->date_of_birth }}">
+                                        @error('date_of_birth')
                                         <div class="invalid-feedback">
                                             {{$message}}
                                         </div>
@@ -70,55 +133,10 @@
             </div>
 
         </div>
-        <div class="span9" id="">
-            <div class="row-fluid">
-                <!-- block -->
-                <div id="block_bg" class="block">
-                    <div class="navbar navbar-inner block-header">
-                        <div class="muted pull-left">Class List</div>
-                    </div>
-                    <div class="block-content collapse in">
-                        <div class="span12">
-                            <table cellpadding="0" cellspacing="0" border="0" class="table" id="example">
-                                <thead>
-                                    <tr>
-                                        <th>Sr.No</th>
-                                        <th>Class Name</th>
-                                        <th>No Of Students</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($classes as $class)
-                                    <tr>
-                                        <td width="@php echo 100/4; @endphp%">
-                                            {{ $loop->iteration }}
-                                        </td>
-                                        <td width="@php echo 100/4; @endphp%">{{ $class->class_name }}</td>
-                                        <td width="@php echo 100/4; @endphp%">{{ $class->no_of_students }}</td>
-
-                                        <td width="@php echo 100/4; @endphp%"><a href="{{ route('class.edit',$class->id) }}"
-                                                class="btn btn-success"><i class="icon-pencil icon-large"></i></a>
-                                                @php $cls = route('class.destroy',$class->id); @endphp
-                                            <a data-toggle="modal" href="#class_delete" style="margin-top:10px" id="delete"
-                                                class="btn btn-danger" onclick="delete_record('{{ $cls }}','Delete Class','class')"><i class="icon-trash icon-large"></i></a>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <!-- /block -->
-            </div>
-
-
-        </div>
+        @include('admins.students.list')
     </div>
-</div>
 
-@endsection
-@section('scripts')
+
+</div>
 
 @endsection

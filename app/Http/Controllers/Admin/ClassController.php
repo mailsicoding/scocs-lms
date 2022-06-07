@@ -57,8 +57,8 @@ class ClassController extends Controller
     public function show($id)
     {
         $students = Student::where('class_id',$id)->orderBy('username')->get();
-        $classes = Classes::orderBy('session_year','asc')->get();
-        return view('admins.students.index',compact('students','classes'));
+        $class = Classes::find($id);
+        return view('admins.students.index',compact('students','class'));
     }
 
     /**
@@ -90,7 +90,7 @@ class ClassController extends Controller
         ]);
         Classes::find($id)->update($request->all());
         toastr()->success('The Class '.$request->class_name.' updated successfully.');
-        return redirect()->route('class.index');
+        return redirect()->route('classes.index');
     }
 
     /**
@@ -105,6 +105,6 @@ class ClassController extends Controller
         $className = $class->class_name;
         $class->delete();
         toastr()->success('The Class '.$className.' deleted successfully.');
-        return redirect()->route('class.index');
+        return redirect()->route('classes.index');
     }
 }

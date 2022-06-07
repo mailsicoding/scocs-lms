@@ -8,7 +8,7 @@
 
     <div class="row-fluid">
         <div class="span6">
-            <h2>Students</h2>
+            <h2>Students Of {{ $class->class_name }} ( {{ $class->session_year }} )</h2>
         </div>
     </div>
     <div style="height:20px;"></div>
@@ -23,26 +23,23 @@
                     </div>
                     <div class="block-content collapse in">
                         <div class="span12">
-                            <form method="post" action="{{ route('student.store') }}">
+                            <form method="post" action="{{ route('students.store') }}">
                                 @csrf
                                 <div class="control-group">
-
                                     <div class="controls">
-                                        <label for="">Select Class</label>
-                                        <select name="class_id" class="chzn-select" required>
-                                            <option>Select Class</option>
-                                            @foreach($classes as $class)
-                                            <option value="{{ $class->id }}">{{ $class->class_name }} ( {{ $class->session_year }} )</option>
-                                            @endforeach
-                                        </select>
+                                        <label for="">Class Name</label>
+                                        <input class="input focused @error('first_name') is-invalid @enderror"
+                                            id="focusedInput" name="" disabled type="text" placeholder="First Name"
+                                            value="{{ $class->class_name }} ( {{ $class->session_year }} )">
+                                            <input type="hidden" name="class_name" value="{{ $class->id }}">
                                     </div>
                                 </div>
                                 <div class="control-group">
                                     <div class="controls">
                                         <label for="">First Name</label>
                                         <input class="input focused @error('first_name') is-invalid @enderror"
-                                            id="focusedInput" name="first_name" type="text" placeholder="First Name"
-                                            value="">
+                                            id="focusedInput" value="{{ old('first_name') }}" name="first_name" type="text" placeholder="First Name"
+                                            >
                                         @error('first_name')
                                         <div class="invalid-feedback">
                                             {{$message}}
@@ -55,7 +52,7 @@
                                         <label for="">Last Name</label>
                                         <input class="input focused @error('last_name') is-invalid @enderror"
                                             id="focusedInput" name="last_name" type="text" placeholder="Last Name"
-                                            value="">
+                                            value="{{ old('last_name') }}">
                                         @error('last_name')
                                         <div class="invalid-feedback">
                                             {{$message}}
@@ -68,7 +65,7 @@
                                     <div class="controls">
                                         <label for="">Email</label>
                                         <input class="input focused @error('email') is-invalid @enderror"
-                                            id="focusedInput" name="email" type="email" placeholder="Email" value="">
+                                            id="focusedInput" name="email" type="email" placeholder="Email"  value="{{ old('email') }}">
                                         @error('email')
                                         <div class="invalid-feedback">
                                             {{$message}}
@@ -82,7 +79,7 @@
                                         <label for="">Phone Number</label>
                                         <input class="input focused @error('phone_number') is-invalid @enderror"
                                             id="focusedInput" name="phone_number" type="number"
-                                            placeholder="Phone Number" value="">
+                                            placeholder="Phone Number" value="{{ old('phone_number') }}">
                                         @error('phone_number')
                                         <div class="invalid-feedback">
                                             {{$message}}
@@ -96,7 +93,7 @@
                                         <label for="">CNIC Number</label>
                                         <input class="input focused @error('cnic_number') is-invalid @enderror"
                                             id="focusedInput" name="cnic_number" type="number" placeholder="CNIC Number"
-                                            value="">
+                                            value="{{ old('cnic_number') }}">
                                         @error('cnic_number')
                                         <div class="invalid-feedback">
                                             {{$message}}
@@ -110,7 +107,7 @@
                                         <label for="">Date Of Birth</label>
                                         <input class="input focused @error('date_of_birth') is-invalid @enderror"
                                             id="focusedInput" name="date_of_birth" type="date"
-                                            placeholder="xxxxxxxxxxxxx" value="">
+                                            placeholder="xxxxxxxxxxxxx" value="{{ old('date_of_birth') }}">
                                         @error('date_of_birth')
                                         <div class="invalid-feedback">
                                             {{$message}}
@@ -135,60 +132,7 @@
             </div>
 
         </div>
-        <div class="span9" id="">
-            <div class="row-fluid">
-                <!-- block -->
-                <div id="block_bg" class="block">
-                    <div class="navbar navbar-inner block-header">
-                        <div class="muted pull-left">Students List</div>
-                    </div>
-                    <div class="block-content collapse in">
-                        <div class="span12">
-                            <table cellpadding="0" width="100%" cellspacing="0" border="0" class="table" id="example">
-                                <thead>
-                                    <tr>
-                                        <th width="@php echo 100/7; @endphp%">Sr.No</th>
-                                        <th width="@php echo 100/7; @endphp%">Name</th>
-                                        <th width="@php echo 100/7; @endphp%">Email</th>
-                                        <th width="@php echo 100/7; @endphp%">Phone</th>
-                                        <th width="@php echo 100/7; @endphp%">CNIC</th>
-                                        <th width="@php echo 100/7; @endphp%">Date Of Birth</th>
-                                        <th width="@php echo 100/7; @endphp%">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($students as $student)
-                                    <tr>
-                                        <td width="@php echo 100/7; @endphp%">
-                                            {{ $loop->iteration }}
-                                        </td>
-                                        <td width="@php echo 100/7; @endphp%">{{ $student->first_name }}</td>
-                                        <td width="@php echo 100/7; @endphp%">{{ $student->last_name }}</td>
-                                        <td width="@php echo 100/7; @endphp%">{{ $student->email }}</td>
-                                        <td width="@php echo 100/7; @endphp%">{{ $student->phone_number }}</td>
-                                        <td width="@php echo 100/7; @endphp%">{{ $student->cnic_number }}</td>
-                                        <td width="@php echo 100/7; @endphp%">{{ $student->date_of_birth }}</td>
-                                        <td width="@php echo 100/7; @endphp%"><a
-                                                href="{{ route('student.edit',$student->id) }}"
-                                                class="btn btn-success"><i class="icon-pencil icon-large"></i></a>
-                                            @php $cls = route('student.destroy',$student->id); @endphp
-                                            <a data-toggle="modal" href="#class_delete" style="margin-top:10px"
-                                                id="delete" class="btn btn-danger"
-                                                onclick="delete_record('{{ $cls }}','Delete Class','class')"><i
-                                                    class="icon-trash icon-large"></i></a>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <!-- /block -->
-            </div>
-
-
-        </div>
+        @include('admins.students.list')
     </div>
 
 
