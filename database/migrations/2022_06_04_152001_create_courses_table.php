@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('course_code');
             $table->string('course_title');
             $table->integer('credit_hours');
-            $table->integer('semester_id');
             $table->text('description');
             $table->timestamps();
         });

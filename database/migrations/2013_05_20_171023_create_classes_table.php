@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('class_name');
             $table->string('session_year');
+            $table->unsignedBigInteger('current_semester')->default(1);
+            $table->string('allow_semester')->default('1');
             $table->timestamps();
         });
     }

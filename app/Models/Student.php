@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Classes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -25,5 +26,14 @@ class Student extends Authenticatable
         'email',
         'password',
     ];
+    
+    protected $hidden = [
+        'password',
+    ];
+
+    public function class()
+    {
+        return $this->hasOne(Classes::class,'id','class_id');
+    }
 
 }

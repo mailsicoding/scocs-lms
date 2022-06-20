@@ -41,7 +41,7 @@ class PasswordController extends Controller
     
     public function showResetForm(Request $request,$token)
     {
-        $url = $request->url();
+        $url = $request->url().'?email='.$request->email;
         $pr = DB::table('password_resets')
             ->where('email',$request->email)
             ->where('token',$token)

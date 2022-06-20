@@ -20,7 +20,7 @@ class Student
         if(!Auth::guard('student')->check())
         {
             toastr()->error('You must login first before continue.');
-            return redirect(route('teacher.login'));  
+            return redirect(route('student.login'));  
         }
         return $next($request);
     }

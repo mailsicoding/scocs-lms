@@ -16,7 +16,7 @@ p {
     color: #999;
 }
 
-a,
+#sidebar-o a,
 a:hover,
 a:focus {
     color: inherit;
