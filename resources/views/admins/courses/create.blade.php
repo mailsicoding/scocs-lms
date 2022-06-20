@@ -62,22 +62,6 @@
                                     @enderror
 								</div>
 							</div>
-							<div class="control-group">
-								<label class="control-label" for="inputPassword">Semester</label>
-								<div class="controls">
-									<select name="semester" class="span8 @error('semester') is-invalid @enderror">
-										<option>Select Semester</option>
-										@foreach($semesters as $semester)
-										<option value="{{ $semester->id }}" @if(old('semester') == $semester->id) selected @endif>{{ $semester->semester_name }}</option>
-										@endforeach
-									</select>
-									@error('semester')
-									<div class="invalid-feedback">
-										{{$message}}
-									</div>
-									@enderror
-								</div>
-							</div>
 
 							<div class="control-group">
 								<label class="control-label" for="inputPassword">Description</label>

@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Admin\Classes;
+use App\Models\Classes;
+use App\Models\AssignClassCourses;
+use App\Models\Course;
+use App\Models\Semester;
 use App\Models\Student;
 use Illuminate\Http\Request;
 
@@ -69,9 +72,12 @@ class ClassController extends Controller
      */
     public function edit($id)
     {
+        $allCourses = Course::all();
+        $semesters = Semester::all()->except(9);
+        $courses = AssignClassCourses::orderBy('semester_id')->get();
         $classes = Classes::orderBy('session_year','asc')->get();
         $class = Classes::find($id);
-        return view('admins.classes.edit',compact('classes','class'));
+        return view('admins.classes.edit',compact('courses','allCourses','semesters','classes','class'));
     }
 
     /**
@@ -86,9 +92,14 @@ class ClassController extends Controller
         // dd($request->all());
         $request->validate([
             'class_name' => 'required|string|unique:classes,class_name,'.$id,
-            'session_year' => 'required||numeric|unique:classes,session_year,'.$id,
+            'session_year' => 'required|numeric|unique:classes,session_year,'.$id,
+            'current_semester' => 'required',
+            'allow_semester' => 'required',
         ]);
-        Classes::find($id)->update($request->all());
+        $inputs = $request->all();
+        $inputs['allow_semester'] = implode(',',$inputs['allow_semester']);
+        $class = Classes::find($id);
+        $class->update($inputs);
         toastr()->success('The Class '.$request->class_name.' updated successfully.');
         return redirect()->route('classes.index');
     }

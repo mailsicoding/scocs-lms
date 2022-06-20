@@ -19,7 +19,7 @@
 		<div class="span12" id="content">
 			<div class="row-fluid">
 				<a href="{{ route('courses.create') }}" class="btn btn-info"><i class="icon-plus-sign icon-large"></i> Add Course</a>
-				<!-- block -->
+			<!-- block -->
 				<div id="block_bg" class="block">
 					<div class="navbar navbar-inner block-header">
 						<div class="muted pull-left">Course List</div>
@@ -32,7 +32,6 @@
 											<th width="">Sr.No</th>
 											<th width="@php echo 100/5; @endphp%">Course Code</th>
 											<th width="@php echo 100/5; @endphp%">Course Title</th>
-											<th width="@php echo 100/5; @endphp%">Semester</th>
 											<th width="@php echo 100/3; @endphp%">Action</th>
 										</tr>
 									</thead>
@@ -42,7 +41,6 @@
 											<td width="">{{ $loop->iteration }}</td>
 											<td width="@php echo 100/4; @endphp%">{{ $course->course_code }}</td>
 											<td width="@php echo 100/4; @endphp%">{{ $course->course_title }}</td>
-											<td width="@php echo 100/4; @endphp%">{{ $course->semester->semester_name }}</td>
 											<td  width="@php echo 100/3; @endphp%"><a href="{{ route('courses.edit',$course->id) }}"
 												class="btn btn-success"><i class="icon-pencil"></i> </a>
 												@php $cls = route('courses.destroy',$course->id); @endphp

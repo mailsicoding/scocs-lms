@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\AssignClassCourses;
 use App\Models\Course;
 use App\Models\Semester;
 use Illuminate\Http\Request;
@@ -16,7 +17,7 @@ class CourseController extends Controller
      */
     public function index()
     {
-        $courses = Course::orderBy('semester_id','ASC')->get();
+        $courses = Course::all();
         return view('admins.courses.index',compact('courses'));
     }
 
@@ -44,12 +45,9 @@ class CourseController extends Controller
         $request->validate([
             'course_code' => 'required|unique:courses',
             'course_title' => 'required|unique:courses',
-            'semester' => 'required',
             'credit_hours' => 'required',
             'description' => 'required',
         ]);
-        $input['semester_id'] = $input['semester'];
-        unset($input['semester']);
         unset($input['save']);
         Course::create($input);
         toastr()->success('The Course created successfully.');
@@ -94,7 +92,6 @@ class CourseController extends Controller
         $request->validate([
             'course_code' => 'required|unique:courses,course_code,'.$id,
             'course_title' => 'required|unique:courses,course_title,'.$id,
-            'semester' => 'required',
             'credit_hours' => 'required',
             'description' => 'required',
         ]);
@@ -115,6 +112,45 @@ class CourseController extends Controller
     public function destroy($id)
     {
         $course = Course::find($id);
+        $course->delete();
+        toastr()->success('The Course deleted successfully.');
+        return redirect()->back();
+    }
+
+    public function assign()
+    {
+        $allCourses = Course::all();
+        $semesters = Semester::all()->except(9);
+        $courses = AssignClassCourses::orderBy('semester_id')->get();
+        return view('admins.courses.assign',compact('courses','allCourses','semesters','classes'));
+    }
+
+    public function assignStore(Request $request)
+    {
+        $request->validate([
+            'course_name' => 'required',
+            'semester_name' => 'required',
+        ]);
+        $exist = AssignClassCourses::where('class_id',$request->class_id)
+                            ->where('course_id',$request->course_name)
+                            ->where('semester_id',$request->semester_name)->first();
+        if($exist)
+        {
+            toastr()->error('The Course already exists.');
+            return redirect()->back();
+        }
+        AssignClassCourses::create([
+            'class_id' => $request->class_id,
+            'course_id' => $request->course_name,
+            'semester_id' => $request->semester_name,
+        ]);
+        toastr()->success('The Course added successfully.');
+        return redirect()->back();
+    }
+    
+    public function assignDestroy($id)
+    {
+        $course = AssignClassCourses::find($id);
         $course->delete();
         toastr()->success('The Course deleted successfully.');
         return redirect()->back();

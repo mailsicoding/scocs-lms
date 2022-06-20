@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\AssignTeacherCourses;
 use App\Http\Controllers\Controller;
+use App\Models\Classes;
+use App\Models\AssignClassCourses;
+use App\Models\Course;
+use App\Models\Semester;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -53,7 +58,7 @@ class TeacherController extends Controller
         // dd($input);
         $teacher = Teacher::create($input);
         $name = $teacher->first_name.' '.$teacher->last_name;
-        toastr()->success('The Student '.$name.' created successfully.');
+        toastr()->success('The Teacher '.$name.' created successfully.');
         return redirect()->back();
     }
 
@@ -76,9 +81,13 @@ class TeacherController extends Controller
      */
     public function edit($id)
     {
-        $teachers = Teacher::orderBy('username','ASC')->get();
+        $semesters = Semester::all()->except(9);
+        $courses = AssignClassCourses::orderBy('semester_id')->distinct('course_id')->get();
         $teacher = Teacher::find($id);
-        return view('admins.teachers.edit',compact('teachers','teacher'));
+        $current = AssignTeacherCourses::where('teacher_id',$teacher->id)->get();
+        $assigned = AssignTeacherCourses::all()->pluck('assign_course_id')->toArray();
+        $classes = Classes::orderBy('session_year','asc')->get();
+        return view('admins.teachers.edit',compact('courses','teacher','semesters','classes','current','assigned'));
     }
 
     /**
@@ -108,7 +117,7 @@ class TeacherController extends Controller
         }
         $teacher->update($input);
         $name = $teacher->first_name.' '.$teacher->last_name;
-        toastr()->success('The Student '.$name.' updated successfully.');
+        toastr()->success('The Teacher '.$name.' updated successfully.');
         return redirect()->route('teachers.index');
     }
 
@@ -125,6 +134,14 @@ class TeacherController extends Controller
         toastr()->success('The Teacher deleted successfully.');
         return redirect()->back();
     }
+    
+    public function delete_assign_teacher_course($id)
+    {
+        $course = AssignTeacherCourses::find($id);
+        $course->delete();
+        toastr()->success('The Course deleted successfully.');
+        return redirect()->back();
+    }
 
     public function username($fname,$lname,$count)
     {
@@ -138,6 +155,16 @@ class TeacherController extends Controller
             return $this->username($fname,$lname,$count+1);
         }
         return $username;
+    }
+
+    public function assign_teacher_course($course,$teacher)
+    {
+        AssignTeacherCourses::create([
+            'teacher_id' => $teacher,
+            'assign_course_id' => $course,
+        ]);
+        toastr()->success('The course has been assigned to Teacher successfully.');
+        return redirect()->back();
     }
 
 }

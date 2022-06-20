@@ -14,8 +14,8 @@
                         <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"
                             style="padding:10px;position:relative;bottom:10px;background-color:#fff"><img
                                 class="img-circle"
-                                src="{{ asset('frontend_assets/auth_assets/images/logo.png') }}"
-                                style="display: inline-block;height:40px;width:40px;padding-right:10px"><b>Admin</b> <i
+                                src="{{ asset(Auth::guard('student')->user()->image) }}"
+                                style="display: inline-block;height:40px;width:40px;margin-right:10px"><b>{{ Auth::guard('student')->user()->first_name }}</b> <i
                                 class="caret" style="position:relative;top:10px;"></i>
 
                         </a>

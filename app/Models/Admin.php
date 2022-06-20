@@ -12,4 +12,8 @@ class Admin extends Authenticatable
 {
     use HasFactory,Notifiable;
     protected $fillable = ['password'];
+
+    protected $hidden = [
+        'password',
+    ];
 }
