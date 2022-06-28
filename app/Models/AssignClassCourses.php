@@ -16,6 +16,11 @@ class AssignClassCourses extends Model
         return $this->hasOne(Classes::class,'id','class_id');
     }
 
+    public function students()
+    {
+        return $this->hasMany(Student::class,'class_id','class_id');
+    }
+
     public function course()
     {
         return $this->hasOne(Course::class,'id','course_id');
@@ -29,6 +34,11 @@ class AssignClassCourses extends Model
     public function meterial()
     {
         return $this->hasMany(CourseMeterial::class,'assign_course_id','id');
+    }
+
+    public function attendance()
+    {
+        return $this->hasMany(Attendance::class,'assign_course_id','id');
     }
 
 }

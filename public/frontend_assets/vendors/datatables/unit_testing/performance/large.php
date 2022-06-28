@@ -77,7 +77,7 @@
 		FROM   testData
 		LIMIT  2000
 	";
-	$rResult = mysqli_query($conn, $sQuery, $gaSql['link'] ) or die(mysqli_error());
+	$rResult = mysqli_query($conn, $sQuery, $gaSql['link'] ) or die(mysqli_error($conn));
 	while ( $aRow = mysqli_fetch_array( $rResult ) )
 	{
 		echo '<tr>';

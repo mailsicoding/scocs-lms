@@ -10,25 +10,18 @@
                     <span>Menu</span>
                 </button>
                 <ul class="nav pull-right">
-                    <li class="dropdown">
-                        <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"
+                    <li>
+                        <a href="#" role="button"
                             style="padding:10px;position:relative;bottom:10px;background-color:#fff"><img
                                 class="img-circle"
                                 src="{{ asset('frontend_assets/auth_assets/images/logo.png') }}"
-                                style="display: inline-block;height:40px;width:40px;padding-right:10px"><b>Admin</b> <i
-                                class="caret" style="position:relative;top:10px;"></i>
+                                style="display: inline-block;height:40px;width:40px;margin-right:10px"><b>Admin</b>
 
                         </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a tabindex="-1" href="#">Profile</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a tabindex="-1" href="#" onclick="document.querySelector('#logout-form').submit()"><i class="icon-signout"></i>&nbsp;Logout</a>
-                                <form action="{{ route('admin.logout') }}" id="logout-form" method="post">@csrf</form>
-                            </li>
-                        </ul>
+                    </li>
+                    <li>
+                        <a tabindex="-1" href="#" onclick="document.querySelector('#logout-form').submit()"><b><i class="icon-signout"></i> &nbsp;Logout</b></a>
+                        <form action="{{ route('admin.logout') }}" id="logout-form" method="post">@csrf</form>
                     </li>
                 </ul>
             </div>

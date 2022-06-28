@@ -18,6 +18,14 @@
             <a href="{{ route('student.courses.meterial') }}"><i class="icon-building"></i> Course Meterial <i
                     class="icon-chevron-right pull-right"></i></a>
         </li>
+        <li class="">
+            <a href="{{ route('student.courses.results') }}"><i class="icon-building"></i> View Results <i
+                    class="icon-chevron-right pull-right"></i></a>
+        </li>
+        <li class="">
+            <a href="{{ route('student.messages') }}"><i class="icon-building"></i> Messages <i
+                    class="icon-chevron-right pull-right"></i></a>
+        </li>
     </ul>
 
 </nav>

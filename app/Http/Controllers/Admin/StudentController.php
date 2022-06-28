@@ -86,9 +86,9 @@ class StudentController extends Controller
      */
     public function edit($id)
     {
-        $class = Classes::find($id);
-        $students = Student::where('class_id',$class->id)->orderBy('username')->get();
         $student = Student::find($id);
+        $class = Classes::find($student->class_id);
+        $students = Student::where('class_id',$class->id)->orderBy('username')->get();
         return view('admins.students.edit',compact('students','student','class'));
     }
 

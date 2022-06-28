@@ -27,54 +27,47 @@
                     </div>
                     <div class="block-content collapse in">
                         
-                    <form action="{{ route('teacher.courses.attendance.mark',$course->id) }}" method="post">
-                                    @csrf
-                            
                         <div class="span12">
-
-                        <div class="control-group">
-								<label class="control-label" for="inputEmail">Attendance Date</label>
-								<div class="controls">
-									<input type="date" value="{{ old('date') }}" name="date" class="span3 @error('date') is-invalid @enderror" id="inputEmail" placeholder="Course Code">
-									@error('date')
-                                        <div class="invalid-feedback">
-                                            {{$message}}
-                                        </div>
-                                    @enderror
-								</div> 
-							</div>
                             
                             <table class="table">
                                 <thead>
                                 <tr>
                                     <th>Student Name</th>
-                                    <th>Present</th>
+                                    <th>Score</th>
+                                    <th>Grade</th>
+                                    <th></th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($students as $s)
                                 <tr>
+                                    @php $reg = $s->register_course($s->id,$course->id); @endphp
                                     <th>{{ $s->first_name.' '.$s->last_name }}</th>
                                     <td>
-                                        <div class="controls">
-                                            <input type="checkbox" value="{{ $s->id }}" name="present[]">
-                                        </div>
+                                        @if(!empty($reg))
+                                        {{$reg->score}}
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if(!empty($reg))
+                                        {{$reg->grade}}
+                                        @else
+                                        Course Not Registered By the Student
+                                        @endif
+                                    </td>
+                                    <td>
+                                    @if(!empty($reg))
+                                        <a data-target="#upload_course" data-toggle="modal" onclick="upload_result('{{$s->id}}','{{$reg->score}}','{{$reg->grade}}')" type="submit" class="btn btn-info"><i class="icon-save"></i>
+										Upload</a>
+                                        @endif
                                     </td>
                                 </tr>
                                 @endforeach
                                 </tbody>
                             </table>
-                    <div class="control-group">
-								<div class="controls">
-
-									<button type="submit" class="btn btn-info"><i class="icon-save"></i>
-										Save</button>
-								</div>
-							</div>
                         </div>
                     </div>
                     <!-- /block -->
-                </form>
 
                 </div>
             </div>
@@ -84,4 +77,17 @@
 
 </div>
 
+@include('teachers.courses.upload_course_modal')
+
+@endsection
+@section('scripts')
+<script>
+    
+    function upload_result(id,score,grade)
+    {
+        $('#student_id').val(id);
+        $('#score').val(score);
+        $('#grade').val(grade);
+    }
+</script>
 @endsection

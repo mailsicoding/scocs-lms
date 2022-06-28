@@ -14,7 +14,13 @@
                     class="icon-home"></i>&nbsp;Upload Course Meterial <i class="icon-chevron-right pull-right"></i></a> </li>
         
         <li class=""> <a href="{{ route('teacher.courses.attendance') }}"><i
-                    class="icon-home"></i>&nbsp;Upload Course Meterial <i class="icon-chevron-right pull-right"></i></a> </li>
+        class="icon-home"></i>&nbsp;Mark Attendance <i class="icon-chevron-right pull-right"></i></a> </li>
+                    
+        <li class=""> <a href="{{ route('teacher.courses.results') }}"><i
+        class="icon-home"></i>&nbsp;Upload Results <i class="icon-chevron-right pull-right"></i></a> </li>
+        
+        <li class=""> <a href="{{ route('teacher.messages') }}"><i
+        class="icon-home"></i>&nbsp;Messages <i class="icon-chevron-right pull-right"></i></a> </li>
         
     </ul>
 
