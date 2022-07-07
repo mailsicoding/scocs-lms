@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Classes;
+use App\Models\Course;
+use App\Models\Student;
+use App\Models\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -25,7 +29,13 @@ class HomeController extends Controller
      */
     public function admin()
     {   
-        return view('admins.dashboard.index');
+        $data = [
+            'classes' => count(Classes::all()),
+            'students' => count(Student::all()),
+            'teachers' => count(Teacher::all()),
+            'courses' => count(Course::all()),
+        ];
+        return view('admins.dashboard.index',$data);
     }
 
     public function teacher()
@@ -62,7 +72,7 @@ class HomeController extends Controller
             'new_password' => 'required|min:8',
         ]);
         $student = Auth::guard('student')->user();
-        if(!Hash::check($student->password,$request->old_password))
+        if(!Hash::check($request->old_password,$student->password))
         {
             return back()->with('error','Please enter correct old password');
         }
@@ -93,8 +103,7 @@ class HomeController extends Controller
             'new_password' => 'required|min:8',
         ]);
         $teacher = Auth::guard('teacher')->user();
-        dd($teacher->password);
-        if(!Hash::check($teacher->password,$request->old_password))
+        if(!Hash::check($request->old_password,$teacher->password))
         {
             return back()->with('error','Please enter correct old password');
         }

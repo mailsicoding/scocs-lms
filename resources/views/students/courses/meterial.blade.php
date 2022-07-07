@@ -1,6 +1,6 @@
 @extends('students.layout.app')
 
-@section('title','Courses')
+@section('title','Courses Meterial')
 
 @section('content')
 

@@ -15,7 +15,7 @@
                                         <th width="@php echo 100/6; @endphp%">Photo</th>
                                         <th width="@php echo 100/6; @endphp%">Name</th>
                                         <th width="@php echo 100/6; @endphp%">Email</th>
-                                        <th width="@php echo 100/6; @endphp%">Phone</th>
+                                        <th width="@php echo 100/6; @endphp%">username</th>
                                         <th width="@php echo 100/6; @endphp%">Action</th>
                                     </tr>
                                 </thead>
@@ -28,7 +28,7 @@
                                         <td width="40px"><img class="img-circle" src="{{ asset($teacher->image) }}" height="50" width="50"></td>
                                         <td width="@php echo 100/6; @endphp%">{{ $teacher->first_name.' '.$teacher->last_name }}</td>
                                         <td width="@php echo 100/6; @endphp%">{{ $teacher->email }}</td>
-                                        <td width="@php echo 100/6; @endphp%">{{ $teacher->phone_number }}</td>
+                                        <td width="@php echo 100/6; @endphp%">{{ $teacher->username }}</td>
                                         <td width="@php echo 100/6; @endphp%"><a
                                                 href="{{ route('teachers.edit',$teacher->id) }}"
                                                 class="btn btn-success"><i class="icon-pencil icon-large"></i></a>

@@ -10,9 +10,12 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Student\CourseController as StudentCourseController;
 use App\Http\Controllers\Student\LoginController as StudentLoginController;
 use App\Http\Controllers\Student\PasswordController as StudentPasswordController;
+use App\Http\Controllers\Student\ResultController;
+use App\Http\Controllers\Teacher\AttendanceController;
 use App\Http\Controllers\Teacher\LoginController as TeacherLoginController;
 use App\Http\Controllers\Teacher\PasswordController as TeacherPasswordController;
 use App\Http\Controllers\Teacher\CourseController as TeacherCourseController;
+use App\Http\Controllers\Teacher\MessageController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
@@ -84,6 +87,8 @@ Route::group(['prefix' => 'teacher','middleware' => ['login_check']],function(){
 Route::group(['prefix' => 'teacher', 'middleware' => ['teacher']],function(){
 
     Route::get('/',[HomeController::class,'teacher'])->name('teacher.dashboard');
+    Route::get('/messages',[MessageController::class,'index'])->name('teacher.messages');
+    Route::post('/messages',[MessageController::class,'teacher_message_send'])->name('teacher.messages.send');
     Route::get('courses/current',[TeacherCourseController::class,'current'])->name('teacher.courses.current');
     Route::get('courses/view/{id}',[TeacherCourseController::class,'view'])->name('teacher.courses.view');
     Route::get('courses/meterial',[TeacherCourseController::class,'meterial'])->name('teacher.courses.meterial');
@@ -92,9 +97,13 @@ Route::group(['prefix' => 'teacher', 'middleware' => ['teacher']],function(){
     Route::get('courses/meterial/view/{id}',[TeacherCourseController::class,'meterialView'])->name('teacher.courses.meterial.view');
     Route::post('/image/update',[HomeController::class,'teacher_image_update'])->name('teacher.image.update');
     Route::post('/password/update',[HomeController::class,'teacher_password_update'])->name('teacher.password.update');
-    Route::get('courses/attendance',[TeacherCourseController::class,'attendance'])->name('teacher.courses.attendance');
-    Route::get('courses/attendance/{id}',[TeacherCourseController::class,'attendance_course'])->name('teacher.courses.attendance.course');
-    Route::post('courses/attendance/mark/{id}',[TeacherCourseController::class,'attendance_mark'])->name('teacher.courses.attendance.mark');
+    Route::get('courses/attendance',[AttendanceController::class,'attendance'])->name('teacher.courses.attendance');
+    Route::get('courses/attendance/{id}',[AttendanceController::class,'attendance_course'])->name('teacher.courses.attendance.course');
+    Route::get('courses/attendance/lecture/{course}',[AttendanceController::class,'attendance_lecture'])->name('teacher.courses.attendance.lecture');
+    Route::post('courses/attendance/mark/{id}',[AttendanceController::class,'attendance_mark'])->name('teacher.courses.attendance.mark');
+    Route::get('courses/results',[ResultController::class,'results'])->name('teacher.courses.results');
+    Route::get('courses/results/{id}',[ResultController::class,'result_course'])->name('teacher.course.result');
+    Route::post('courses/results/upload/{id}',[ResultController::class,'upload_result'])->name('teacher.courses.upload.result');
     Route::post('logout',[TeacherLoginController::class,'logout'])->name('teacher.logout');
     
 });
@@ -119,6 +128,8 @@ Route::group(['prefix' => 'student','middleware' => ['login_check']],function(){
 Route::group(['prefix' => 'student', 'middleware' => ['student']],function(){
 
     Route::get('/',[HomeController::class,'student'])->name('student.dashboard');
+    Route::get('/messages',[MessageController::class,'messages'])->name('student.messages');
+    Route::post('/messages',[MessageController::class,'student_message_send'])->name('student.messages.send');
     Route::post('/image/update',[HomeController::class,'student_image_update'])->name('student.image.update');
     Route::post('/password/update',[HomeController::class,'student_password_update'])->name('student.password.update');
     Route::post('logout',[StudentLoginController::class,'logout'])->name('student.logout');
@@ -128,7 +139,8 @@ Route::group(['prefix' => 'student', 'middleware' => ['student']],function(){
     Route::get('courses/meterial',[StudentCourseController::class,'meterial'])->name('student.courses.meterial');
     Route::get('courses/meterial/view/{id}',[StudentCourseController::class,'meterialView'])->name('student.courses.meterial.view');
     Route::post('courses/offered/load',[StudentCourseController::class,'offeredLoad'])->name('student.courses.offered.load');
-    Route::get('courses/offered/register/{id}',[StudentCourseController::class,'offeredRegister'])->name('student.courses.offered.register');
-    Route::get('courses/offered/unregister/{id}',[StudentCourseController::class,'offeredUnRegister'])->name('student.courses.offered.unregister');
+    Route::get('courses/offered/register/{id}',[ResultController::class,'offeredRegister'])->name('student.courses.offered.register');
+    Route::get('courses/offered/unregister/{id}',[ResultController::class,'offeredUnRegister'])->name('student.courses.offered.unregister');
+    Route::get('courses/results',[ResultController::class,'view_result'])->name('student.courses.results');
     
 });

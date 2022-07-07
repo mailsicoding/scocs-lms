@@ -1,6 +1,6 @@
 @extends('admins.layout.app')
 
-@section('title','Courses')
+@section('title','Dashboard')
 
 @section('content')
 
@@ -16,7 +16,6 @@
     <div class="row-fluid">
         <!--/span-->
         <div class="span12" id="content">
-            <div class="row-fluid"></div>
 
             <div class="row-fluid">
 
@@ -28,10 +27,34 @@
                     <div class="block-content collapse in">
                         <div class="span12">
 
+                        <div class="span3">
+                                <div class="chart" data-percent="{{ $classes }}">
+                                    {{ $classes }}</div>
+                                <div class="chart-bottom-heading"><strong>Classes</strong>
+
+                                </div>
+                            </div>
+                            
                             <div class="span3">
-                                <div class="chart" data-percent="100">
-                                    100</div>
-                                <div class="chart-bottom-heading"><strong>Registered Teacher</strong>
+                                <div class="chart" data-percent="{{ $courses }}">
+                                    {{ $courses }}</div>
+                                <div class="chart-bottom-heading"><strong>Courses</strong>
+
+                                </div>
+                            </div>
+                            
+                            <div class="span3">
+                                <div class="chart" data-percent="{{ $teachers }}">
+                                    {{ $teachers }}</div>
+                                <div class="chart-bottom-heading"><strong>Teachers</strong>
+
+                                </div>
+                            </div>
+                            
+                            <div class="span3">
+                                <div class="chart" data-percent="{{ $students }}">
+                                    {{ $students }}</div>
+                                <div class="chart-bottom-heading"><strong>Students</strong>
 
                                 </div>
                             </div>

@@ -8,7 +8,7 @@
 
     <div class="row-fluid">
         <div class="span6">
-            <h2>Current Courses</h2>
+            <h2>Offered Courses</h2>
         </div>
     </div>
     <div style="height:20px;"></div>
@@ -19,7 +19,7 @@
             <!-- block -->
             <div class="block">
                 <div class="navbar navbar-inner block-header">
-                    <div class="muted pull-left">Assign Class Courses</div>
+                    <div class="muted pull-left">Offered Courses</div>
                 </div>
                 <div class="block-content collapse in">
                     <div class="span12">
@@ -61,7 +61,7 @@
             <!-- block -->
             <div id="block_bg" class="block">
                 <div class="navbar navbar-inner block-header">
-                    <div class="muted pull-left">Assign Courses</div>
+                    <div class="muted pull-left">Offered Courses</div>
                 </div>
                 <div class="block-content collapse in">
                     <div class="span12">

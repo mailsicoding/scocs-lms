@@ -36,4 +36,9 @@ class Student extends Authenticatable
         return $this->hasOne(Classes::class,'id','class_id');
     }
 
+    public function register_course($sid,$cid)
+    {
+        return RegisterCourse::where('student_id',$sid)->where('assign_course_id',$cid)->first();
+    }
+
 }

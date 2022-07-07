@@ -38,7 +38,7 @@
                                     @foreach($current as $course)
                                     <tr>
                                         <th>{{ $course->assignCourse->course->course_title }}</th>
-                                        <td><a href="{{ route('teacher.courses.attendance.course',$course->assignCourse->course->id) }}" class="btn btn-info">view course</a></td>
+                                        <td><a href="{{ route('teacher.course.result',$course->assignCourse->course->id) }}" class="btn btn-info">view course</a></td>
                                     </tr>
                                     @endforeach
                                     </tbody>

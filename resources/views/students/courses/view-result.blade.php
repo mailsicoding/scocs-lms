@@ -1,6 +1,6 @@
 @extends('students.layout.app')
 
-@section('title','Courses Meterial')
+@section('title','Results')
 
 @section('content')
 
@@ -23,26 +23,24 @@
                 </div>
                 <div class="block-content collapse in">
                     <div class="span12">
-                        <table cellpadding="0" cellspacing="0" border="0" class="table" id="example">
+                        <table class="table">
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Lecture #</th>
-                                    <th>Title</th>
-                                    <th>Action</th>
+                                    <th>Course Name</th>
+                                    <th>Semester</th>
+                                    <th>Score</th>
+                                    <th>Grade</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($files as $file)
+                                @foreach($courses as $index => $r)
                                 <tr>
-                                    <td></td>
-                                    <td width="@php echo 100/3; @endphp%">Lecture # {{ $file->lecture }}</td>
-                                    <td width="@php echo 100/3; @endphp%">{{ $file->title }}</td>
-                                    <td width="@php echo 100/2; @endphp%">
-                                        <a href="{{ $file->file }}" download="{{ $file->title }}" style="margin-top:10px" class="btn btn-info">
-                                            Download
-                                        </a>
-                                    </td>
+                                    <td>{{ $index+1 }}</td>
+                                    <td width="@php echo 100/3; @endphp%">{{ $r->assignCourse->course->course_title }}</td>
+                                    <td width="@php echo 100/3; @endphp%">{{ $r->assignCourse->semester->semester_name }}</td>
+                                    <td width="@php echo 100/3; @endphp%">{{ $r->score }}</td>
+                                    <td width="@php echo 100/3; @endphp%">@if($r->grade == 'RNU') Result Not Uploaded Yet @else {{ $r->grade }} @endif</td>
                                 </tr>
                                 @endforeach
                             </tbody>
